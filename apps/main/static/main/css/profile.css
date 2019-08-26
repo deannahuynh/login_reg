@@ -1,0 +1,30 @@
+#wrapper {
+   margin: 40px;
+}
+
+#logout {
+   text-decoration: underline;
+}
+
+#main {
+   margin: 50px 150px;
+}
+
+.button {
+   text-align: right;
+   margin: 20px 0;
+}
+
+.messageContent {
+   margin-left: 30px;
+   text-align: justify;
+}
+
+#commentButton {
+   background-color: green;
+   border: none;
+}
+
+.comments {
+   margin-left: 60px;
+}

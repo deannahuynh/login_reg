@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Login & Reg</title>
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+</head>
+<body>
+   <div id="wrapper">
+      <nav class="navbar navbar-light bg-light">
+         <a class="navbar-brand">CodingDojo Wall</a>
+         <form class="form-inline">
+            <h2 class="navbar-brand">Welcome, you've been logged in {{ user.firstName }}! </h2>
+            <form action="/logout" class="btn btn-outline-success my-2 my-sm-0">
+               <a id="logout" href="/logout">Logout</a>
+            </form>
+         </form>
+      </nav>
+
+      <div id="main">
+         <form action="/message/create" class="form-group" method="POST">
+         {% csrf_token %}
+            <label for="exampleFormControlTextarea1">Post a message</label>
+            <textarea class="form-control" name="message"  id="exampleFormControlTextarea1" rows="3"></textarea>
+            <div class="button">
+               <button type="submit" class="btn btn-primary">Post a message</button>
+            </div>
+         </form>
+         
+         {% for message in messages %}
+         <div class="showMessages">
+            <h4>{{ message.user.firstName }} - {{ message.user.created_at }}</h4>
+            <p class="messageContent">{{ message.content }}</p>
+            
+            <div class="comments">
+               {% for comment in comments %}
+                  {% if comment.message_id == message.id %}
+                     <h5>{{ comment.user.firstName }}</h5>
+                     <p>{{ comment.content }}</p>
+                  {% endif %}
+               {% endfor %}
+               <form action="/comment/create" class="form-group" id="comment" method="POST">
+                  {% csrf_token %}
+                  <label for="exampleFormControlTextarea1">Post a comment</label>
+                  <textarea class="form-control" name = "comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  <div class="button">
+                     <input type="hidden" name="messageId" value="{{message.id}}">
+                     <button type="submit" id="commentButton" class="btn btn-primary">Post a comment</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+         {% endfor %}
+      </div>
+   </div>
+</body>
+</html>
